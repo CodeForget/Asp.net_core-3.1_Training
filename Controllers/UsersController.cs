@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -19,14 +20,14 @@ namespace web_api.Controllers
                
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<appUser>>> GetUsers(){
             return await _Context.Users.ToListAsync();
         }
-
-
-         [HttpGet("{id}")]
+        
+        [Authorize]
+        [HttpGet("{id}")]
         public async Task<ActionResult<appUser>> GetUserById(int id){
 
             return await _Context.Users.FindAsync(id);
